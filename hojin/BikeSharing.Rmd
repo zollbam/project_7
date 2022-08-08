@@ -1,0 +1,11 @@
+---
+title: "BikeSharing"
+author: "HOJIN LEE"
+date: "2022-08-08"
+output: html_document
+---
+
+```{r}
+a<-1
+a
+```
