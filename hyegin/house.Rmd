@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 a<-1
 a
+b<-1
+b
 ```
 
 ## R Markdown
