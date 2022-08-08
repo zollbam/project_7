@@ -1,18 +1,167 @@
 ---
-title: "라면 레이팅"
+title: "The Ramen Rater"
 author: "곽영효"
 date: "2022-08-08"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## 출처: Top Ramen Ratings 2022
+
+<https://www.kaggle.com/datasets/ankanhore545/top-ramen-ratings-2022>
+
+## 서론
+
+2002년부터 전세계의 라면 리뷰를 해온 리뷰어 'The Ramen Rater'
+
+그가 그동안 라면들에 매긴 별점들에 대한 데이터
+
 
 ## DataFrame 불러오기
 
 ```{r}
-df <- read.csv('./')
+df <- read.csv('./TopRamenRatings.csv', header = T,
+               fileEncoding = "euc-kr")
+str(df)
 ```
+
+```{r}
+library(VIM)
+aggr(df, prop = F, numbers = T)
+```
+
+```{r}
+summary(df)
+```
+## NA => 0점으로 변환
+
+```{r}
+df$Stars <- as.double(df$Stars)
+df[is.na(df$Stars), ]$Stars <- 0
+```
+
+## 범주형으로 변환
+
+```{r}
+df$Brand <- as.factor(df$Brand)
+df$Style <- as.factor(df$Style)
+df$Country <- as.factor(df$Country)
+```
+
+
+```{r}
+# df[df$Stars >= 4.00 & df$Country == 'South Korea',]$Variety
+```
+
+## 항목 수 상위 10개국
+
+```{r}
+country_10 <- head(table(df$Country)[order(table(df$Country), decreasing = T)], 10)
+
+country_10
+```
+## 상위 10개국의 라면 개수
+
+```{r}
+library(ggplot2)
+country_10 <- as.data.frame(country_10)
+
+graph1 <- ggplot(country_10, aes(x = reorder(Var1, Freq),
+                                 y = Freq)) + geom_bar(stat = 'identity') + 
+          labs(title = "라면 종류 수 상위 10개국") +
+            theme(plot.title = element_text(hjust = 0.5))
+
+graph1 <- graph1 + coord_flip() + labs(x='', y='라면 개수') + 
+        geom_text(aes(label=Freq), size=3, hjust=1.25, color='#FFFFFF')
+
+graph1 + geom_bar(country_10[country_10$Var1=='South Korea', ],
+                 mapping = aes(x=reorder(Var1, Freq), y=Freq), fill='#5CBED2', 
+                 stat='identity') +
+         geom_text(aes(label=Freq), size=3, hjust=1.25, color='#FFFFFF')
+```
+
+## 4점 이상의 별점을 받은 라면의 비율
+
+```{r}
+df_country_10 <- df[df$Country %in% country_10$Var1,]
+df_country_10 <- table(df_country_10[df_country_10$Stars >= 4.00,]$Country)
+df_country_10 <- head(df_country_10[order(df_country_10, decreasing = T)], 10)
+df_country_10 <- as.data.frame(df_country_10)
+
+for (i in 1:10){
+    df_country_10$Freq[i] <- df_country_10$Freq[i] / country_10$Freq[i]}
+
+graph2 <- ggplot(df_country_10, aes(x = reorder(Var1, Freq),
+                 y = Freq)) + geom_bar(stat = 'identity')  + 
+          labs(title = "상위 10개국의 별점 4.0 이상 비율") +
+            theme(plot.title = element_text(hjust = 0.5))
+
+graph2 <-graph2 + coord_flip() + labs(x='', y='별점 4.0 이상 비율') +
+        scale_y_continuous(labels = scales::percent) +
+        geom_text(aes(label=round(Freq,4)*100), size=3,
+                  hjust=1.25, color='#FFFFFF') 
+
+graph2 + geom_bar(df_country_10[df_country_10$Var1=='South Korea', ],
+                 mapping = aes(x=reorder(Var1, Freq), y=Freq), fill='#5CBED2', 
+                 stat='identity') +
+         geom_text(aes(label=round(Freq,4)*100), size=3, hjust=1.25, 
+                   color='#FFFFFF')
+
+```
+## 
+
+
+
+```{r}
+df[(df$Country == 'South Korea') & (df$Stars == 5),]$Variety
+```
+
+## 포장 방법에 따른 라면 종류 개수
+
+
+```{r}
+ramen_style_df <- as.data.frame(table(df$Style))
+ramen_style_df <- ramen_style_df[-c(1, 2, 5, 8),]
+
+graph3 <- ggplot(ramen_style_df, aes(x = reorder(Var1, Freq),
+                 y = Freq)) + geom_bar(stat = 'identity')  + 
+          labs(title = "포장 방법에 따른 라면 개수") +
+            theme(plot.title = element_text(hjust = 0.5))
+graph3 <- graph3 + coord_flip() + labs(x='', y='라면 개수') + 
+        geom_text(aes(label=Freq), size=3, hjust=1.25, color='#FFFFFF')
+
+graph3
+```
+## 라면 포장 방법에 따른 평균 별점 
+
+
+
+```{r}
+ramen_style <- c('Pack', 'Bowl', 'Cup', 'Tray', 'Box')
+ramen_style_mean <- c('')
+
+for (i in 1:5){
+    ramen_style_mean[i] <- round(mean(df[df$Style == ramen_style[i],]$Stars),2)
+}
+
+ramen_style_mean_df <- data.frame(ramen_style, ramen_style_mean)
+ramen_style_mean_df[2] <- as.double(ramen_style_mean)
+
+graph4 <- ggplot(ramen_style_mean_df, aes(x = reorder(ramen_style, 
+                                                      ramen_style_mean),
+                 y = ramen_style_mean)) + geom_bar(stat = 'identity')  + 
+          labs(title = "라면 포장 방법에 따른 평균 별점") +
+            theme(plot.title = element_text(hjust = 0.5))
+graph4 <- graph4 + coord_flip() + labs(x='', y='평균 별점') + 
+        geom_text(aes(label=ramen_style_mean), size=3, hjust=1.25, color='#FFFFFF')
+graph4
+```
+
+
+
+
 
 
