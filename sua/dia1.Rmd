@@ -5,27 +5,44 @@ date: "2022-08-08"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-a<-1
-a
+
+## 데이터 불러오기
+
+```{r}
+df<-read.csv('./diabetes/diabetes.csv')
+str(df)
 ```
 
-## 여기서 하라고요?
+# 변수 설명
+- Pregnancies : Number of times pregnant (임신한 횟수)
+- Glucose : Plasma glucose concentration a 2 hours in an oral glucose tolerance test
+	  (경구 포도당 내성 시험에서 2시간마다 혈장 포도당 농도)
+- BloodPressure : Diastolic blood pressure (mm Hg)
+	           (확장기 혈압)
+- SkinThickness : Triceps skin fold thickness (mm)
+	           (삼두근 피부 주름 두께)
+- Insulin : 2-Hour serum insulin (mu U/ml)
+	 (2시간마다 혈청 인슐린)
+- BMI : Body mass index (weight in kg/(height in m)^2)
+          (체질량지수)
+- DiabetesPedigreeFunction : Diabetes pedigree function
+			 (당뇨병 유전)
+- Age : Age (years)
+          (나이)
+- Outcome : Class variable (0 or 1) 268 of 768 are 1, the others are 0
+	    (당뇨냐 아니냐)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+head(df)
 ```
 
-## Including Plots
+```{r}
+summary(df)
+```
+17번이나 임신한 사람이 있음 -> 이상치일까?
+glucose 최솟값이 0임 -> 이상치일까?
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+sum(df$BloodPressure==0)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
