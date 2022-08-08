@@ -13,24 +13,25 @@ df<-read.csv('./diabetes/diabetes.csv')
 str(df)
 ```
 
-# 변수 설명
+## 변수 설명
 - Pregnancies : Number of times pregnant (임신한 횟수)
 - Glucose : Plasma glucose concentration a 2 hours in an oral glucose tolerance test
-	  (경구 포도당 내성 시험에서 2시간마다 혈장 포도당 농도)
+	       (경구 포도당 내성 시험에서 2시간마다 혈장 포도당 농도)
+	  
 - BloodPressure : Diastolic blood pressure (mm Hg)
-	           (확장기 혈압)
+	             (확장기 혈압)
 - SkinThickness : Triceps skin fold thickness (mm)
-	           (삼두근 피부 주름 두께)
+	             (팔 삼두근 뒤쪽의 피하지방 측정값)
 - Insulin : 2-Hour serum insulin (mu U/ml)
-	 (2시간마다 혈청 인슐린)
+       	   (2시간마다 혈청 인슐린)
 - BMI : Body mass index (weight in kg/(height in m)^2)
-          (체질량지수)
+        (체질량지수) 
 - DiabetesPedigreeFunction : Diabetes pedigree function
-			 (당뇨병 유전)
+			                (당뇨병 유전)
 - Age : Age (years)
-          (나이)
+       (나이)
 - Outcome : Class variable (0 or 1) 268 of 768 are 1, the others are 0
-	    (당뇨냐 아니냐)
+	       (당뇨냐 아니냐)
 
 ```{r}
 head(df)
@@ -40,81 +41,128 @@ head(df)
 summary(df)
 ```
 17번이나 임신한 사람이 있음 -> 이상치일까?
-glucose 최솟값이 0임 -> 이상치일까?
+Glucose, BloodPressure, SkinThickness, Insulin, BMI 최솟값이 0임(있을 수 없는 값) -> null값으로 변환 -> 무슨 값으로 바꿀지
+
+혈당은 정상인 사람이 
+BMI가 0이려면 체중이 0이어야 함 (존재할 수 없음)
+
+인슐린이 0인 데이터가 374개나 있는데 인슐린이 0이 될 수도 있는지가 매우 고민이었음
+찾아본 결과(출처 https://www.e-cep.org/upload/pdf/2002451001-20090108180408.PDF 4페이지)
+베타세포의 기능이 완전히 소실되면, 환자는 외부에서 주입하는 인슐린에 전적으로 의존해야 한다.
+라는 말이 인슐린이 0일 수 있다고 생각했음
+
+하지만 또다른 의문 : 그러면 인슐린이 0이면 무조건 당뇨여야 하지 않나?
+그런데 인슐린이 0인 사람들 중에 당뇨인 사람은 374명 중 138명뿐이었다.
+
+찾아보니까 0은 결측치다
+
 
 ```{r}
-sum(df$BloodPressure==0)
+sum(df[df$Insulin==0, 9])
+```
+
+
+## 0의 개수 확인하기
+```{r}
+# for (name in col_names) {
+#     cat(name, '\n')
+#     cat(sum(df[, name]==0), '\n\n')
+# }
+```
+
+## 0을 결측치로 바꿔주기
+```{r}
+df[, 2:6][df[, 2:6]==0]<-NA
 ```
 
 ```{r}
-boxplot(df$BloodPressure)
+head(df)
 ```
+NA로 잘 바뀌었는지 확인
+
 ```{r}
+par(mfrow=c(1, 3))
+boxplot(df$Pregnancies)
 boxplot(df$Glucose)
+boxplot(df$BloodPressure)
+#legend=c('Pregnancies', 'Glucose', 'BloodPressure')
+```
+```{r}
+par(mfrow=c(1, 3))
+boxplot(df$SkinThickness)
+boxplot(df$Insulin)
+boxplot(df$BMI)
 ```
 
 ```{r}
-sum(df$Glucose==0)
-sum(df$BloodPressure==0)
-sum(df$SkinThickness==0)
-sum(df$Insulin==0)
-sum(df$BMI==0)
-sum(df$DiabetesPedigreeFunction==0)
-```
-
-df[which(df$Glucose==0),]$Glucose<-NA
-
-
-```{r}
-remove_zero<-function (col) {
-    cat(col)
-    #cat(df[, col])
-    cat(df[df[, col]==0, col])
-    #df[df[, col]==0, col] <-NA
-}
+par(mfrow=c(1, 3))
+boxplot(df$DiabetesPedigreeFunction)
+boxplot(df$Age)
+boxplot(df$Outcome)
 ```
 
 
+### Outcome을 factor로 바꿔봄
 ```{r}
-remove_zero('Insulin')
+df$Outcome<-factor(df$Outcome, levels=c(0, 1), labels=c('N', 'Y'))
 ```
-
+```{r}
+table(df$Outcome)
+```
+당뇨 안 걸린 사람 500명, 당뇨 걸린 사람 268명
 
 ```{r}
-df$Insulin
+prop.table(table(df$Outcome))
 ```
 
 
 ```{r}
-sapply('Insulin', remove_zero)
+barplot(table(df$Outcome), main='당뇨 유무에 따른 사람 수', xlab='당뇨', ylab='사람 수', col=c('tomato', 'steelblue'))
 ```
 
 
 ```{r}
-sum(is.na(df$Insulin))
+table(df$Pregnancies, df$Outcome)
+```
+```{r}
+cor(df[,-9], as.numeric(df$Outcome))
+```
+
+## 히스토그램 그려보기
+```{r}
+par(mfrow=c(3, 3))
+hist(df$Pregnancies, col=2)
+hist(df$Glucose, col=3)
+hist(df$BloodPressure, col=4)
+hist(df$SkinThickness, col=5)
+hist(df$Insulin, col=6)
+hist(df$BMI, col=7)
+hist(df$DiabetesPedigreeFunction, col=8)
+hist(df$Age, col=9)
+barplot(table(df$Outcome), col='tomato')
+
 ```
 
 
 ```{r}
-sum(df$Insulin==0)
+aggregate(df[, -9],
+          by=list(Diabetes=df$Outcome),
+          FUN=mean, na.rm=T)
 ```
+당뇨가 있는 사람이 임신 횟수, 혈당, 혈압, 피부 두께, 인슐린, BMI, 당뇨 내력 가중치, 나이가 다 높음
 
+
+
+## 인슐린 !!!!!
 ```{r}
-df$Glucose
+mean(df[!df$Insulin %in% outlier, ]$Insulin)
+mean(df$Insulin)
 ```
+인슐린이 0인 사람이 374명이나 있는데 전체의 절반 정도 되는 인원임.
+마냥 NA로 바꾸기엔 인슐린이 0이 될 수 있는 가능성이 있어서
+그저 결측치로 표현할 수는 없다고 생각했음.
+포도당이 0인 경우 인슐린이 0이 될 수도 있지 않을까? 했지만 4명밖에 없음
+근데 인슐린이 0이면 무조건 당뇨 아닌가? 했지만
+인슐린이 0인 사람 중에 당뇨인 사람은 374명 중 138명뿐이었다.
 
-
-```{r}
-df[df[, 'Glucose']==0, 'Glucose'] <-NA
-```
-
-
-```{r}
-sum(is.na(df$Glucose))
-```
-
-
-```{r}
-df[which(df$Glucose==0),]$Glucose<-NA
-```
-
+인슐린 0 값을 처리하는 가장 좋은 방법은 뭘까?
