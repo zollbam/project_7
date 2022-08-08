@@ -10,10 +10,54 @@ output: html_document
 df <- read.csv("train.csv", header = T)
 str(df)
 ```
+## NA 값 확인
+```{r}
+for (i in 1:length(df)){
+    cat(colnames(df)[i],sum(is.na(df[,i])),'\n')
+}
+```
 
+# 열에 대한 정보 확인
+```{r}
+summary(df)
+```
 
+## df head 확인
 ```{r}
 head(df)
+```
+
+# 새로운 열 만들기
+# 숫자형으로 표현하기 위해 날짜 데이터는
+# 년, 월, 시간, 요일로 따로 데이터를 부르기
+```{r}
+library(dplyr)
+library(lubridate)
+traindf <- df %>%
+    select(-casual, -registered) %>%
+    mutate(
+        year = year(datetime),
+        month = month(datetime),
+        hour = hour(datetime),
+        wday = wday(datetime))
+```
+
+# 타입 변경
+```{r}
+traindf$season <- factor(traindf$season, labels = c("Spring", "Summer", "Fall", "Winter"))
+traindf$weather <- factor(traindf$weather, labels = c("Good", "Normal", "Bad", "Very Bad"))
+traindf$holiday <- factor(traindf$holiday) # 0: 평일, 1:휴일
+traindf$workingday <- factor(traindf$workingday) # 0: 휴일, 1:평일
+traindf$year <- factor(traindf$year)
+traindf$month <- factor(traindf$month)
+traindf$hour <- factor(traindf$hour)
+traindf$wday <- factor(traindf$wday, labels = c("Sun", "Mon", "Tue", "Wed", "Thu","Fir","Sat"))
+```
+
+# 타입 변경 확인
+```{r}
+str(traindf)
+summary(traindf)
 ```
 
 # 컬럼 설명
@@ -37,43 +81,74 @@ head(df)
 
 # season의 갯수와 NA 갯수 확인
 ```{r}
-table(df$season,useNA='always')
-barplot(table(df$season))
+table(traindf$season,useNA='always')
+barplot(table(traindf$season), ylim=c(0,3000))
 ```
+
+# weather의 갯수와 NA 갯수 확인
+```{r}
+table(traindf$weather,useNA='always')
+barplot(table(traindf$weather), ylim=c(0,8000))
+```
+
 
 ## holiday의 갯수와 NA 갯수 확인
 ```{r}
-table(df$holiday,useNA='always')
-barplot(table(df$holiday))
+table(traindf$holiday,useNA='always')
+barplot(table(traindf$holiday), ylim=c(0,13000))
 ```
 
-## 
+# 11년도 12년도의 시간대별 자전거 대여 횟수
 ```{r}
-summary(df)
+ye_ho_total<-traindf%>%
+    group_by(year,hour)%>%
+    summarise(to=sum(count))
+summary(ye_ho_total)
+barplot(to~year+hour,data=ye_ho_total)
 ```
+
+# 11년도 12년도 각각의 시간대별 대여 횟수 그래프
 ```{r}
-#View(df)
+b<-ye_ho_total[ye_ho_total$year==2011,]
+c<-ye_ho_total[ye_ho_total$year==2012,]
+
+par(mfrow=c(1,2))
+mycolor<-ifelse(b$to>60000,'blue','yellow')
+barplot(to~hour,data=b, xlab='2011',col=mycolor)
+
+mycolor<-ifelse(c$to>100000,'blue','yellow')
+barplot(to~hour,data=c, xlab='2012',col=mycolor)
+traindf$year<-factor(traindf$year)
 ```
 
-
-
-
-## na 값 확인
+# 계절별 날씨에 대한 만족 건수
 ```{r}
-sum(is.na(df$temp))
+se_we_count<-traindf%>%
+    group_by(season,weather)%>%
+    summarise(su=n(), .groups = "drop_last")
+
+se_we_count
+barplot(su~weather+season,data=se_we_count)
+```
+
+# 계절별 대여수
+```{r}
+se_cou_count<-traindf%>%
+    group_by(season)%>%
+    summarise(se=sum(count))
+
+se_cou_count
+barplot(se~season,data=se_cou_count)
 ```
 
 
 ```{r}
-
+traindf[traindf$season=='Winter','count']
+sort(traindf[traindf$season=='Winter','count'],decreasing=T)
+sort(traindf[traindf$season=='Spring','count'],decreasing=T)
+sum(traindf[traindf$season=='Winter', 'count'])
+sum(traindf[traindf$season=='Spring', 'count'])
 ```
 
-
-
-
-
-
-
-
-
-
+summary(traindf)
+sort(decreas)
