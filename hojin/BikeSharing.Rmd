@@ -5,7 +5,75 @@ date: "2022-08-08"
 output: html_document
 ---
 
+## 10886개의 관측값, 12개의 변수
 ```{r}
-a<-1
-a
+df <- read.csv("train.csv", header = T)
+str(df)
 ```
+
+
+```{r}
+head(df)
+```
+
+# 컬럼 설명
+### datetime: hourly date + timestamp
+### season: 1=봄, 2=여름, 3=가을, 4=겨울
+### holiday: 1=주말을 제외한 국경일 등의 휴일, 0=휴일이 아닌 날
+### workingday: 1=주말 및 휴일이 아닌 주중, 0=주말 및 휴일
+### weather:
+## 1=맑음, 약간 구름 낀 흐림
+## 2=안개, 안개 + 흐림
+## 3=가벼운 눈, 가벼운 비 + 천둥
+## 4=심한 눈/비, 천둥/번개
+### temp: 온도(섭씨)
+### atemp: 체감온도(섭씨)
+### humidity: 상대습도
+### windspeed: 풍속
+### casual: 사전에 등록되지 않은 사용자가 대여한 횟수
+### registered: 사전에 등록된 사용자가 대여한 횟수
+### count: 대여 횟수
+
+
+# season의 갯수와 NA 갯수 확인
+```{r}
+table(df$season,useNA='always')
+barplot(table(df$season))
+```
+
+## holiday의 갯수와 NA 갯수 확인
+```{r}
+table(df$holiday,useNA='always')
+barplot(table(df$holiday))
+```
+
+## 
+```{r}
+summary(df)
+```
+```{r}
+#View(df)
+```
+
+
+
+
+## na 값 확인
+```{r}
+sum(is.na(df$temp))
+```
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
