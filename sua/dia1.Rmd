@@ -46,3 +46,75 @@ glucose 최솟값이 0임 -> 이상치일까?
 sum(df$BloodPressure==0)
 ```
 
+```{r}
+boxplot(df$BloodPressure)
+```
+```{r}
+boxplot(df$Glucose)
+```
+
+```{r}
+sum(df$Glucose==0)
+sum(df$BloodPressure==0)
+sum(df$SkinThickness==0)
+sum(df$Insulin==0)
+sum(df$BMI==0)
+sum(df$DiabetesPedigreeFunction==0)
+```
+
+df[which(df$Glucose==0),]$Glucose<-NA
+
+
+```{r}
+remove_zero<-function (col) {
+    cat(col)
+    #cat(df[, col])
+    cat(df[df[, col]==0, col])
+    #df[df[, col]==0, col] <-NA
+}
+```
+
+
+```{r}
+remove_zero('Insulin')
+```
+
+
+```{r}
+df$Insulin
+```
+
+
+```{r}
+sapply('Insulin', remove_zero)
+```
+
+
+```{r}
+sum(is.na(df$Insulin))
+```
+
+
+```{r}
+sum(df$Insulin==0)
+```
+
+```{r}
+df$Glucose
+```
+
+
+```{r}
+df[df[, 'Glucose']==0, 'Glucose'] <-NA
+```
+
+
+```{r}
+sum(is.na(df$Glucose))
+```
+
+
+```{r}
+df[which(df$Glucose==0),]$Glucose<-NA
+```
+
