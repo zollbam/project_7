@@ -5,6 +5,7 @@ df_hye<-read.csv('./hyejin/',header=T)
 df_su<-read.csv('./sua/diabetes/diabetes.csv',header=T)
 View(df_su)
 sum(df_su[df_su$Insulin>=300,'Outcome'])/nrow(df_su[df_su$Insulin>=300,])
+hist(df_su$Insulin,breaks=10)
 
 ## 영효
 df_young<-read.csv('./younghyo/TopRamenRatings.csv',header=T,fileEncoding = "euc-kr")
@@ -14,7 +15,12 @@ library(dplyr)
 df_young%>%
     filter(df_young$Country=='South Korea')%>%
     summarise(mean=mean(df_young$Stars,na.rm=T))
-class(df_young$Stars)
+mycolor<-sample(1:1000,9)
+fig.height(20)
+fig.width<-5
+windows(width=10, height=10)
+pie(table(df_young$Style),col=mycolor,labels=paste(names(table(df_young$Style)),'개'),radius=1)
+
 ## 호진
 df_ho<-read.csv('./hojin/train.csv',header=T)
 View(df_ho)
