@@ -40,11 +40,8 @@ head(df)
 ```{r}
 summary(df)
 ```
-17번이나 임신한 사람이 있음 -> 이상치일까?
-Glucose, BloodPressure, SkinThickness, Insulin, BMI 최솟값이 0임(있을 수 없는 값) -> null값으로 변환 -> 무슨 값으로 바꿀지
+Glucose, BloodPressure, SkinThickness, BMI 최솟값이 0임(있을 수 없는 값) -> NA값으로 변환 -> 평균값으로 치환
 
-혈당은 정상인 사람이 
-BMI가 0이려면 체중이 0이어야 함 (존재할 수 없음)
 
 인슐린이 0인 데이터가 374개나 있는데 인슐린이 0이 될 수도 있는지가 매우 고민이었음
 찾아본 결과(출처 https://www.e-cep.org/upload/pdf/2002451001-20090108180408.PDF 4페이지)
@@ -54,64 +51,67 @@ BMI가 0이려면 체중이 0이어야 함 (존재할 수 없음)
 하지만 또다른 의문 : 그러면 인슐린이 0이면 무조건 당뇨여야 하지 않나?
 그런데 인슐린이 0인 사람들 중에 당뇨인 사람은 374명 중 138명뿐이었다.
 
-찾아보니까 0은 결측치다
 
 
 ```{r}
-sum(df[df$Insulin==0, 9])
+# 인슐린이 0인 사람 중 당뇨 환자 수
+cat(sum(df[df$Insulin==0, 9]))
+cat(length(df[df$Insulin==0, 9]))
 ```
 
 
 ## 0의 개수 확인하기
 ```{r}
-# for (name in col_names) {
-#     cat(name, '\n')
-#     cat(sum(df[, name]==0), '\n\n')
-# }
+for (name in colnames(df)[-c(1, 9)]) {
+    cat(name, '\n')
+    cat(sum(df[, name]==0), '\n\n')
+}
 ```
 
-## 0을 결측치로 바꿔주기
+## Glucose, BloodPressure, SkinThickness, BMI 열의 0을 결측치로 바꿔주기
 ```{r}
-df[, 2:6][df[, 2:6]==0]<-NA
+df[, c(2:4, 6)][df[, c(2:4, 6)]==0]<-NA
 ```
 
 ```{r}
 head(df)
 ```
-NA로 잘 바뀌었는지 확인
 
-```{r}
-par(mfrow=c(1, 3))
+
+```{r, fig.height=5, fig.width=6}
+par(mfrow=c(3, 3))
 boxplot(df$Pregnancies)
 boxplot(df$Glucose)
 boxplot(df$BloodPressure)
-#legend=c('Pregnancies', 'Glucose', 'BloodPressure')
-```
-```{r}
-par(mfrow=c(1, 3))
 boxplot(df$SkinThickness)
 boxplot(df$Insulin)
 boxplot(df$BMI)
-```
-
-```{r}
-par(mfrow=c(1, 3))
 boxplot(df$DiabetesPedigreeFunction)
 boxplot(df$Age)
-boxplot(df$Outcome)
+barplot(table(df$Outcome))
 ```
 
 
-### Outcome을 factor로 바꿔봄
+
+
+
+### Outcome을 factor로 바꾸기
 ```{r}
 df$Outcome<-factor(df$Outcome, levels=c(0, 1), labels=c('N', 'Y'))
 ```
+
 ```{r}
 table(df$Outcome)
 ```
 당뇨 안 걸린 사람 500명, 당뇨 걸린 사람 268명
 
 ```{r}
+pie(table(df$Outcome), col=c('tomato', 'orange'), main='당뇨 환자 비율', labels=paste(table(df$Outcome)))
+```
+
+
+```{r}
+# 당뇨 환자 비율
 prop.table(table(df$Outcome))
 ```
 
@@ -121,15 +121,196 @@ barplot(table(df$Outcome), main='당뇨 유무에 따른 사람 수', xlab='당�
 ```
 
 
+
+
 ```{r}
 table(df$Pregnancies, df$Outcome)
 ```
+
+# 평균값으로 결측치 채우기
 ```{r}
-cor(df[,-9], as.numeric(df$Outcome))
+glu_mean<-mean(df$Glucose, na.rm=T)
+press_mean<-mean(df$BloodPressure, na.rm=T)
+skin_mean<-mean(df$SkinThickness, na.rm=T)
+bmi_mean<-mean(df$BMI, na.rm=T)
 ```
 
-## 히스토그램 그려보기
 ```{r}
+glu_mean
+press_mean
+skin_mean
+bmi_mean
+```
+
+```{r}
+df[is.na(df$Glucose), ]$Glucose<-glu_mean
+df[is.na(df$BloodPressure), ]$BloodPressure<-press_mean
+df[is.na(df$SkinThickness), ]$SkinThickness<-skin_mean
+df[is.na(df$BMI), ]$BMI<-bmi_mean
+summary(df)
+```
+
+## 인슐린의 0 값 처리
+```{r}
+outlier<-boxplot.stats(df$Insulin)$out
+mean(df[!df$Insulin %in% outlier, ]$Insulin)
+```
+이상치를 뺀 값의 평균
+```{r}
+mean(df$Insulin)
+```
+이상치를 포함한 값의 평균
+
+
+인슐린이 0인 사람이 374명이나 있는데 전체의 절반 정도 되는 인원임.
+마냥 NA로 바꾸기엔 인슐린이 0이 될 수 있는 가능성이 있어서
+그저 결측치로 표현할 수는 없다고 생각했음.
+포도당이 0인 경우 인슐린이 0이 될 수도 있지 않을까? 했지만 4명밖에 없음
+근데 인슐린이 0이면 무조건 당뇨 아닌가? 했지만
+인슐린이 0인 사람 중에 당뇨인 사람은 374명 중 138명뿐이었다.
+
+인슐린 값을 샘플링해서 0 값을 대체해줌.
+
+```{r}
+# 뭐 하려고 만든거지
+# sum(df[df$Insulin %in% outlier, 9])
+# length(df[df$Insulin %in% outlier, 9])
+```
+
+
+인슐린 이상치를 가진 사람들(34명) 중 당뇨인 사람은 19명
+```{r}
+mean(df[df$Insulin %in% outlier, 2])
+```
+이상치를 가진 사람들의 혈당 평균은 전체 혈당 평균에 비해 높음
+
+```{r}
+# 전체 혈당 평균
+mean(df$Glucose)
+```
+
+```{r}
+iqr_insulin<-IQR(df$Insulin)
+
+ins_q3<-quantile(df$Insulin)[4]
+ins_q1<-quantile(df$Insulin)[2]
+
+ins_max<-ins_q3+1.5*iqr_insulin
+```
+이상치를 처리하기 위해 사분위수를 이용하여 이상치 값들을 대체함
+0을 대체하기 위해 (0, max_out)의 범위에서 0의 개수(374개)만큼 샘플링
+
+
+```{r}
+sample_insulin<-sample(0:ins_max, size=sum(df$Insulin==0), replace=T)
+df[df$Insulin==0, ]$Insulin<-sample_insulin
+```
+샘플링해서 0값들 대체
+
+```{r}
+summary(df)
+```
+
+
+
+## 이상치 처리하기
+```{r}
+preg_iqr<-IQR(df$Pregnancies)
+glu_iqr<-IQR(df$Glucose)
+pres_iqr<-IQR(df$BloodPressure)
+skin_iqr<-IQR(df$SkinThickness)
+ins_iqr<-IQR(df$Insulin)
+bmi_iqr<-IQR(df$BMI)
+pedigree_iqr<-IQR(df$DiabetesPedigreeFunction)
+age_iqr<-IQR(df$Age)
+
+preg_min<-quantile(df$Pregnancies)[2] - (1.5*preg_iqr)
+preg_max<-quantile(df$Pregnancies)[4] + (1.5*preg_iqr)
+
+glu_min<-quantile(df$Glucose)[2] - (1.5*glu_iqr)
+glu_max<-quantile(df$Glucose)[4] + (1.5*glu_iqr)
+
+pres_min<-quantile(df$BloodPressure)[2] - (1.5*pres_iqr)
+pres_max<-quantile(df$BloodPressure)[4] + (1.5*pres_iqr)
+
+skin_min<-quantile(df$SkinThickness)[2] - (1.5*skin_iqr)
+skin_max<-quantile(df$SkinThickness)[4] + (1.5*skin_iqr)
+
+ins_min<-quantile(df$Insulin)[2] - (1.5*ins_iqr)
+ins_max<-quantile(df$Insulin)[4] + (1.5*ins_iqr)
+
+bmi_min<-quantile(df$BMI)[2] - (1.5*bmi_iqr)
+bmi_max<-quantile(df$BMI)[4] + (1.5*bmi_iqr)
+
+pedigree_min<-quantile(df$DiabetesPedigreeFunction)[2] - (1.5*pedigree_iqr)
+pedigree_max<-quantile(df$DiabetesPedigreeFunction)[4] + (1.5*pedigree_iqr)
+
+age_min<-quantile(df$Age)[2] - (1.5*age_iqr)
+age_max<-quantile(df$Age)[4] + (1.5*age_iqr)
+
+
+
+#df[df$Pregnancies<preg_min,]$Pregnancies  하한값보다 작은 값 없음
+#df[df$Pregnancies>preg_max, ]$Pregnancies
+df[df$Pregnancies>preg_max, ]$Pregnancies<-preg_max
+#df[df$Pregnancies==preg_max, ]  # 값이 제대로 바뀌었는지 확인
+
+# summary(df$Glucose)
+# boxplot.stats(df$Glucose)
+# # Glucose는 이상치 없음
+# df[df$Glucose<glu_min, ]$Glucose
+# df[df$Glucose>glu_max, ]$Glucose
+
+
+#df[df$BloodPressure<pres_min,]$BloodPressure
+df[df$BloodPressure<pres_min, ]$BloodPressure<-pres_min
+#df[df$BloodPressure>pres_max, ]$BloodPressure
+df[df$BloodPressure>pres_max, ]$BloodPressure<-pres_max
+# df[df$BloodPressure==pres_min, ]
+# df[df$BloodPressure==pres_max, ]    값이 제대로 바뀌었는지 확인
+
+
+#df[df$SkinThickness<skin_min,]$SkinThickness
+df[df$SkinThickness<skin_min, ]$SkinThickness<-skin_min
+#df[df$SkinThickness>skin_max, ]$SkinThickness
+df[df$SkinThickness>skin_max, ]$SkinThickness<-skin_max
+# df[df$SkinThickness==skin_max, ]
+# df[df$SkinThickness==skin_min,]    값이 제대로 바뀌었는지 확인
+
+
+# df[df$Insulin<ins_min,]$Insulin
+# df[df$Insulin>ins_max,]$Insulin
+df[df$Insulin>ins_max, ]$Insulin<-ins_max
+# df[df$Insulin==ins_max, ]    값이 제대로 바뀌었는지 확인
+
+
+# df[df$BMI<bmi_min,]$BMI
+# df[df$BMI>bmi_max,]$BMI
+df[df$BMI>bmi_max,]$BMI<-bmi_max
+#df[df$BMI==bmi_max,]$BMI    값이 제대로 바뀌었는지 확인
+
+
+# df[df$DiabetesPedigreeFunction<pedigree_min,]$DiabetesPedigreeFunction
+# df[df$DiabetesPedigreeFunction>pedigree_max,]$DiabetesPedigreeFunction
+df[df$DiabetesPedigreeFunction>pedigree_max,]$DiabetesPedigreeFunction<-pedigree_max
+#df[df$DiabetesPedigreeFunction==pedigree_max,]$DiabetesPedigreeFunction    값이 제대로 바뀌었는지 확인
+
+
+
+# df[df$Age<age_min,]$Age
+# df[df$Age>age_max,]$Age
+df[df$Age>age_max,]$Age<-age_max
+#df[df$Age==age_max,]$Age    값이 제대로 바뀌었는지 확인
+```
+
+```{r}
+summary(df)
+```
+
+
+
+## 히스토그램 그려보기
+```{r, fig.height=5, fig.width=6}
 par(mfrow=c(3, 3))
 hist(df$Pregnancies, col=2)
 hist(df$Glucose, col=3)
@@ -149,64 +330,25 @@ aggregate(df[, -9],
           by=list(Diabetes=df$Outcome),
           FUN=mean, na.rm=T)
 ```
-당뇨가 있는 사람이 임신 횟수, 혈당, 혈압, 피부 두께, 인슐린, BMI, 당뇨 내력 가중치, 나이가 다 높음
+당뇨가 있는 사람이 임신 횟수, 혈당, 혈압, 피부 두께, 인슐린, BMI, 당뇨 내력 가중치, 나이가 다 높은 편임
 
 
-
-## 인슐린 !!!!!
+## 상관계수
 ```{r}
-mean(df[!df$Insulin %in% outlier, ]$Insulin)
-mean(df$Insulin)
+cor(df[,-9], as.numeric(df$Outcome))
 ```
-인슐린이 0인 사람이 374명이나 있는데 전체의 절반 정도 되는 인원임.
-마냥 NA로 바꾸기엔 인슐린이 0이 될 수 있는 가능성이 있어서
-그저 결측치로 표현할 수는 없다고 생각했음.
-포도당이 0인 경우 인슐린이 0이 될 수도 있지 않을까? 했지만 4명밖에 없음
-근데 인슐린이 0이면 무조건 당뇨 아닌가? 했지만
-인슐린이 0인 사람 중에 당뇨인 사람은 374명 중 138명뿐이었다.
-
-인슐린 0 값을 처리하는 가장 좋은 방법은 뭘까?
-
-```{r}
-sum(df[df$Insulin %in% outlier, 9])
-length(df[df$Insulin %in% outlier, 9])
-```
-인슐린 이상치를 가진 사람들(34명) 중 당뇨인 사람은 19명
-```{r}
-mean(df[df$Insulin %in% outlier, 2])
-```
-혈당 평균은 전체 혈당 평균에 비해 높음
-
-```{r}
-# 전체 혈당 평균
-mean(df$Glucose)
-```
-
-```{r}
-iqr_insulin<-IQR(df$Insulin)
-
-q3<-quantile(df$Insulin)[4]
-q1<-quantile(df$Insulin)[2]
-min_out<-q1-1.5*iqr_insulin
-max_out<-q3+1.5*iqr_insulin
-max_out
-```
-이상치를 처리하기 위해 사분위수를 이용하여 이상치 값들을 대체함
-0을 대체하기 위해 (0, max_out)의 범위에서 0의 개수(374개)만큼 샘플링
+유의한 변수는 Glucose 정도..
 
 
-```{r}
-sample_insulin<-sample(0:max_out, size=sum(df$Insulin==0), replace=T)
-df[df$Insulin==0, ]$Insulin<-sample_insulin
-```
-샘플링해서 0값들 대체
-
-
-```{r}
-
-```
-
-```{r}
-
+```{r, fig.height=6, fig.width=5}
+par(mfrow=c(3,3))
+boxplot(Pregnancies~Outcome, data=df, col=c('tomato', 'steelblue'))
+boxplot(Glucose~Outcome, data=df, col=c('tomato', 'steelblue'))
+boxplot(BloodPressure~Outcome, data=df, col=c('tomato', 'steelblue'))
+boxplot(SkinThickness~Outcome, data=df, col=c('tomato', 'steelblue'))
+boxplot(Insulin~Outcome, data=df, col=c('tomato', 'steelblue'))
+boxplot(BMI~Outcome, data=df, col=c('tomato', 'steelblue'))
+boxplot(DiabetesPedigreeFunction~Outcome, data=df, col=c('tomato', 'steelblue'))
+boxplot(Age~Outcome, data=df, col=c('tomato', 'steelblue'))
 ```
 

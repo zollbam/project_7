@@ -12,23 +12,35 @@ knitr::opts_chunk$set(echo = TRUE)
 ## 출처: Top Ramen Ratings 2022
 
 <https://www.kaggle.com/datasets/ankanhore545/top-ramen-ratings-2022>
+<https://www.theramenrater.com/>
 
 ## 서론
-
-2002년부터 전세계의 라면 리뷰를 해온 리뷰어 'The Ramen Rater'
-
-그가 그동안 라면들에 매긴 별점들에 대한 데이터
+![ramenrater](./img/ramenrater.png)
 
 
-## DataFrame 불러오기
+2002년부터 라면 외길을 걸어온 라면 전문 리뷰어 'The Ramen Rater'
 
-```{r}
+그가 블로그에서 20년이란 세월동안 전 세계의 라면들에 매겨온 평점에 대한 데이터다.
+
+
+## 라?면
+
+![ra?men](./img/ramen_bar1.png)
+![ra?men](./img/ramen_bar2.png)
+![ra?men](./img/ramen_can.png)
+
+bar와 can타입의 항목이 있었는데 라면이라고 부르기는 어려운 음식들이었다.
+
+이들을 제외하고 분석을 실시했다.
+
+
+```{r include = F}
 df <- read.csv('./TopRamenRatings.csv', header = T,
                fileEncoding = "euc-kr")
 str(df)
 ```
 
-```{r}
+```{r include = F}
 library(VIM)
 aggr(df, prop = F, numbers = T)
 ```
@@ -36,36 +48,29 @@ aggr(df, prop = F, numbers = T)
 ```{r}
 summary(df)
 ```
-## NA => 0점으로 변환
 
-```{r}
+
+```{r include=F}
 df$Stars <- as.double(df$Stars)
 df[is.na(df$Stars), ]$Stars <- 0
 ```
 
-## 범주형으로 변환
-
-```{r}
+```{r include = F}
 df$Brand <- as.factor(df$Brand)
 df$Style <- as.factor(df$Style)
 df$Country <- as.factor(df$Country)
 ```
 
-
-```{r}
-# df[df$Stars >= 4.00 & df$Country == 'South Korea',]$Variety
-```
-
 ## 항목 수 상위 10개국
 
-```{r}
+```{r include = F}
 country_10 <- head(table(df$Country)[order(table(df$Country), decreasing = T)], 10)
 
 country_10
 ```
 ## 상위 10개국의 라면 개수
 
-```{r}
+```{r include = F}
 library(ggplot2)
 country_10 <- as.data.frame(country_10)
 
@@ -77,15 +82,61 @@ graph1 <- ggplot(country_10, aes(x = reorder(Var1, Freq),
 graph1 <- graph1 + coord_flip() + labs(x='', y='라면 개수') + 
         geom_text(aes(label=Freq), size=3, hjust=1.25, color='#FFFFFF')
 
-graph1 + geom_bar(country_10[country_10$Var1=='South Korea', ],
+graph1 <- graph1 + geom_bar(country_10[country_10$Var1=='South Korea', ],
                  mapping = aes(x=reorder(Var1, Freq), y=Freq), fill='#5CBED2', 
                  stat='identity') +
-         geom_text(aes(label=Freq), size=3, hjust=1.25, color='#FFFFFF')
+        geom_text(aes(label=Freq), size=3, hjust=1.25, color='#FFFFFF')
 ```
+
+```{r}
+graph1
+```
+
+## 국가별 라면 평균 평점
+
+
+```{r include = F, warning=F}
+df_country_10 <- c('Japan', 'United States', 'South Korea', 'Taiwan',
+                   'China', 'Thailand', 'Malaysia', 'Hong Kong',
+                   'Indonesia', 'Singapore')
+df_country_10_mean <- c('')
+
+for (i in 1:10){
+    df_country_10_mean[i] <- round(mean(df[df$Country==df_country_10[i],]$Stars),2)
+}
+df_country_10_mean_df <- data.frame(df_country_10, df_country_10_mean)
+df_country_10_mean_df[2] <- as.double(df_country_10_mean)
+
+graph5 <- ggplot(df_country_10_mean_df, aes(x = reorder(df_country_10, 
+                                                      df_country_10_mean),
+                 y = df_country_10_mean)) + geom_bar(stat = 'identity') + 
+          labs(x='', y='평균 평점', title = "국가별 평균 평점") +
+            theme(plot.title = element_text(hjust = 0.5)) + coord_flip() +
+        geom_text(aes(label=df_country_10_mean), size=3, hjust=1.25,
+                  color='#FFFFFF')
+
+graph5 <- graph5 + geom_bar(df_country_10_mean_df[df_country_10_mean_df$df_country_10== 'South Korea', ],
+                 mapping = aes(x=reorder(df_country_10, df_country_10_mean),
+                               y=df_country_10_mean), fill='#5CBED2', 
+                 stat='identity') + geom_text(aes(label=df_country_10_mean),
+                                              size=3, hjust=1.25, color='#FFFFFF')
+```
+
+```{r}
+graph5
+```
+## 분석
+
+태국을 제외한 말레이시아, 인도네시아, 싱가포르 라면들의 평균 평점이 1위 그룹을
+형성했다.
+
+한국, 일본, 미국처럼 개수가 많았던 국가들은 저조한 평균 평점을 기록했다.
+생산한 라면 종류가 많은만큼, 애매한 상품들도 많이 개발되었기 때문.
+
 
 ## 4점 이상의 별점을 받은 라면의 비율
 
-```{r}
+```{r include = F}
 df_country_10 <- df[df$Country %in% country_10$Var1,]
 df_country_10 <- table(df_country_10[df_country_10$Stars >= 4.00,]$Country)
 df_country_10 <- head(df_country_10[order(df_country_10, decreasing = T)], 10)
@@ -96,50 +147,94 @@ for (i in 1:10){
 
 graph2 <- ggplot(df_country_10, aes(x = reorder(Var1, Freq),
                  y = Freq)) + geom_bar(stat = 'identity')  + 
-          labs(title = "상위 10개국의 별점 4.0 이상 비율") +
+          labs(title = "상위 10개국의 평점 4.0 이상 라면의 비율") +
             theme(plot.title = element_text(hjust = 0.5))
 
-graph2 <-graph2 + coord_flip() + labs(x='', y='별점 4.0 이상 비율') +
+graph2 <-graph2 + coord_flip() + labs(x='', y='평점 4.0 이상 비율') +
         scale_y_continuous(labels = scales::percent) +
         geom_text(aes(label=round(Freq,4)*100), size=3,
                   hjust=1.25, color='#FFFFFF') 
 
-graph2 + geom_bar(df_country_10[df_country_10$Var1=='South Korea', ],
+graph2 <- graph2 + geom_bar(df_country_10[df_country_10$Var1=='South Korea', ],
                  mapping = aes(x=reorder(Var1, Freq), y=Freq), fill='#5CBED2', 
                  stat='identity') +
          geom_text(aes(label=round(Freq,4)*100), size=3, hjust=1.25, 
                    color='#FFFFFF')
-
 ```
-## 
-
-
 
 ```{r}
-# df[(df$Country == 'South Korea') & (df$Stars == 5),]$Variety
+graph2
 ```
+
+
+```{r include = F}
+df_country_10 <- df[df$Country %in% country_10$Var1,]
+df_country_10 <- table(df_country_10[df_country_10$Stars == 5.00,]$Country)
+df_country_10 <- head(df_country_10[order(df_country_10, decreasing = T)], 10)
+df_country_10 <- as.data.frame(df_country_10)
+
+for (i in 1:10){
+    df_country_10$Freq[i] <- df_country_10$Freq[i] / country_10$Freq[i]}
+
+graph7 <- ggplot(df_country_10, aes(x = reorder(Var1, Freq),
+                 y = Freq)) + geom_bar(stat = 'identity')  + 
+          labs(title = "상위 10개국의 평점 5점 만점 라면의 비율") +
+            theme(plot.title = element_text(hjust = 0.5))
+
+graph7 <-graph7 + coord_flip() + labs(x='', y='평점 5점 비율') +
+        scale_y_continuous(labels = scales::percent) +
+        geom_text(aes(label=round(Freq,4)*100), size=3,
+                  hjust=1.25, color='#FFFFFF') 
+
+graph7 <- graph7 + geom_bar(df_country_10[df_country_10$Var1=='South Korea', ],
+                 mapping = aes(x=reorder(Var1, Freq), y=Freq), fill='#5CBED2', 
+                 stat='identity') +
+         geom_text(aes(label=round(Freq,4)*100), size=3, hjust=1.25, 
+                   color='#FFFFFF')
+```
+
+```{r}
+graph7
+```
+
+## 분석
+
+5점 만점을 받은 비율은 한국이 압도적으로 1위.
+    - 신라면 시리즈나 불닭 시리즈처럼 파생상품 개발에 적극적인 것이 이유로 판단됨.
+
+4점 이상 비율에선 10개국 중 꼴지였던 대만이 5점 만점 비율에선 2위를 차지.
+
+이와 반대로 4점 이상 비율이 1위였던 일본은 5점 만점 비율에선 8위라는 낮은 순위. 
 
 ## 라면 포장 방법에 따른 종류 개수
 
-
-```{r}
+```{r include = F}
 ramen_style_df <- as.data.frame(table(df$Style))
 ramen_style_df <- ramen_style_df[-c(1, 2, 5, 8),]
+ramen_style_df[2] <- round(ramen_style_df[2] / sum(ramen_style_df[2])*100, 2) 
 
 graph3 <- ggplot(ramen_style_df, aes(x = reorder(Var1, Freq),
                  y = Freq)) + geom_bar(stat = 'identity')  + 
-          labs(title = "포장 방법에 따른 라면 개수") +
+          labs(title = "라면 포장 방법에 따른 비율") +
             theme(plot.title = element_text(hjust = 0.5))
-graph3 <- graph3 + coord_flip() + labs(x='', y='라면 개수') + 
+graph3 <- graph3 + coord_flip() + labs(x='', y='비율') + 
         geom_text(aes(label=Freq), size=3, hjust=1.25, color='#FFFFFF')
+```
 
+```{r}
 graph3
 ```
+
+## 분석
+
+한국에선 왕뚜껑, 공화춘과 같은 Bowl형 컵라면을 Cup형 컵라면에 비해서 보기 힘듦.
+
+하지만, 의외로 전세계적으로는 Bowl형과 Cup형의 가짓수가 비슷
 
 
 ## 라면 포장 방법에 따른 평균 별점 
 
-```{r}
+```{r include = F}
 ramen_style <- c('Pack', 'Bowl', 'Cup', 'Tray', 'Box')
 ramen_style_mean <- c('')
 
@@ -153,10 +248,13 @@ ramen_style_mean_df[2] <- as.double(ramen_style_mean)
 graph4 <- ggplot(ramen_style_mean_df, aes(x = reorder(ramen_style, 
                                                       ramen_style_mean),
                  y = ramen_style_mean)) + geom_bar(stat = 'identity')  + 
-          labs(title = "라면 포장 방법에 따른 평균 별점") +
+          labs(title = "라면 포장 방법에 따른 평균 평점") +
             theme(plot.title = element_text(hjust = 0.5))
-graph4 <- graph4 + coord_flip() + labs(x='', y='평균 별점') + 
+graph4 <- graph4 + coord_flip() + labs(x='', y='평균 평점') + 
         geom_text(aes(label=ramen_style_mean), size=3, hjust=1.25, color='#FFFFFF')
+```
+
+```{r}
 graph4
 ```
 
@@ -166,13 +264,76 @@ graph4
 
 위와 같은 박스형 라면들이 평균 별점이 제일 높았다.
 
+박스형으로 포장된 것들은 보통 고가형 라인업이 많기 때문인 것으로 생각된다.
 
+
+
+```{r include = F}
+korean_ramen_score <- c('5-4.1', '4-3.1', '3-2.1', '2-1.1', '1-0')
+korean_ramen <- c('')
+
+korean_ramen[1] <- length(df[(df$Country == 'South Korea' & df$Stars>4),]$Stars)
+korean_ramen[2] <- length(df[(df$Country == 'South Korea' & df$Stars>3 &
+                                  df$Stars<=4),]$Stars)
+korean_ramen[3] <- length(df[(df$Country == 'South Korea' & df$Stars>2 & 
+                                  df$Stars<=3),]$Stars)
+korean_ramen[4] <- length(df[(df$Country == 'South Korea' & df$Stars>1 &
+                                  df$Stars<=2),]$Stars)
+korean_ramen[5] <- length(df[(df$Country == 'South Korea' & df$Stars<=1),]$Stars)
+
+korean_ramen_df <- data.frame(korean_ramen_score, korean_ramen)
+korean_ramen_df[2] <- as.double(korean_ramen)
+korean_ramen_df[2] <- round(korean_ramen_df[2]/sum(korean_ramen_df[2])*100,2)
+
+graph6 <- ggplot(korean_ramen_df, aes(x = '', y = korean_ramen,
+                                      fill = korean_ramen_score)) + 
+        geom_bar(stat = 'identity') + theme_minimal() + theme_classic()+
+        labs(x = NULL, y= NULL, fill = NULL, title = "한국 라면의 평점 분포") +
+        theme(plot.title = element_text(hjust = 0.5), 
+              axis.line = element_blank(),
+              axis.text = element_blank(),
+              axis.ticks = element_blank()) +
+        coord_polar('y', start = 0)+
+        scale_fill_manual(values = c('magenta','gray','violet','tomato','gold'))
+
+graph6 <- graph6 + geom_text(aes(label=korean_ramen, "%"), size=3, hjust=1.25,
+                             position = position_stack(vjust=0.5), color='black')
+```
 
 ```{r}
-length(df[(df$Country == 'South Korea'),]$Variety)
-
-
+graph6
 ```
+
+
+## 번외: The Ramen Rater가 뽑은 한국의 역체라면 2021 Edition
+
+![rank10_신라면블랙](./img/rank10.png)
+
+![rank09_삼양치즈라면](./img/rank09.png)
+
+![rank08_팔도치즈라면](./img/rank08.png)
+
+![rank07_신라면건면](./img/rank07.png)
+
+![rank06_라이트_불닭볶음면](./img/rank06.png)
+
+![rank05_짜장불닭라볶이](./img/rank05.png)
+
+![rank04_팔도라볶이](./img/rank04.png)
+
+![rank03_삼양라면_매운맛](./img/rank03.png)
+
+![rank02_진짬뽕](./img/rank02.png)
+
+![rank01_까르보불닭라볶이](./img/rank01.png)
+
+## 번외2: 별점 5점 만점을 획득한 한국 라면 리스트
+
+```{r}
+df[df$Country == 'South Korea' & df$Stars == 5.00,]$Variety
+```
+
+
 
 
 
