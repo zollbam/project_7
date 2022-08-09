@@ -92,6 +92,20 @@ fan.plot(sp_ta_rast,col=mycolor,labels=paste(names(sp_ta_rast),sp_ta_rast),radiu
     - 풍속이 강한 날VS약한 날 대여 횟수
 
 ```{r}
+## 호진
+df_ho<-read.csv('./hojin/train.csv',header=T)
+df_ho$holiday<-factor(df_ho$holiday)
+h0_df_ho<-df_ho[df_ho$holiday==0,]
+h1_df_ho<-df_ho[df_ho$holiday==1,]
+h0_df_ho_to<-df_ho%>%
+    summarise(total=sum(count)/5)
+h1_df_ho_to<-df_ho%>%
+    summarise(total=sum(count)/2)
+result<-cbind(h0_df_ho_to,h1_df_ho_to)
+names(result)<-c('ho','h1')
 
+par(mfrow=c(1,2))
+barplot(result$ho,xlab='ho')
+barplot(result$h1,xlab='h1')
 ```
 
