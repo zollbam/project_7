@@ -1,13 +1,13 @@
-# 프로젝트 7
+---
+title: "prologue"
+author: "gyc"
+date: "2022-08-08"
+output:
+  word_document: default
+  html_document: default
+---
 
-# 2조의 조원은?
-이혜진/김수아/곽영호/이호진/조건영
-
-# 2조의 조장은?
-조건영
-
-# 2조의 이름은?
-R을 알리조
+# R을 알리조의 캐글 데이터를 활용한 데이터 분석
 
 ## 이혜진
 ### 활용데이터
@@ -25,6 +25,16 @@ R을 알리조
     1. BldgType 주거유형에 따른 집 가격
     2. 수영장 품질에 따른 집가격
     3. 년도별 집값 평균 추이
+
+```{r}
+df_hye<-read.csv('./hyejin/house-prices/train.csv',header=T)
+df_hye$YrSold<-factor(df_hye$YrSold)
+year_price<-df_hye%>%
+    group_by(YrSold)%>%
+    summarise(mean_price=mean(SalePrice))
+mycolor=1:nrow(year_price)
+barplot(mean_price~YrSold,data=year_price,col=mycolor)
+```
     
 ## 김수아
 - **당뇨병 검사**
@@ -42,12 +52,21 @@ R을 알리조
 - *Top Ramen Ratings 2022*
 - 출처: https://www.kaggle.com/datasets/ankanhore545/top-ramen-ratings-2022
 - 어려웠던 점
-    - 데이터를 시각화 하기 위해 어떤 그래프를 선택해야 적합할지 고민을 함
+    - Stars열의 타입이 chr
 - 기대되는 점
     - 전세계의 라면의 종류에 대해 분석을 해보는 기대감과 즐거움 => 라면국물 병, 라면 초콜릿 => 원그래프로 종류보여주기
     - 한국 라면의 위상???
     - 
-    
+
+```{r fig.height=4,fig.width=5}
+df_young<-read.csv('./younghyo/TopRamenRatings.csv',header=T,fileEncoding = "euc-kr")
+sp_ta_rast<-sort(table(df_young$Style))
+library(plotrix)
+mycolor<-1:nrow(sp_ta_rast)
+fan.plot(sp_ta_rast,col=mycolor,labels=paste(names(sp_ta_rast),sp_ta_rast),radius=1)
+```
+
+
 ## 이호진
 ### 활용데이터
 - **자전가 대여**
@@ -61,3 +80,5 @@ R을 알리조
     
     
     - 풍속이 강한 날VS약한 날 대여 횟수
+
+
