@@ -1,5 +1,5 @@
 ---
-title: "house Prices"
+title: "House Prices - Advanced Regression Techniques"
 author: "Hyejin Lee"
 date: "2022-08-08"
 output:
@@ -12,7 +12,7 @@ output:
 
 ```{r}
 library(tidyverse)
-train <- read_csv("./house-prices/train.csv")
+train <- read.csv("./house-prices/train.csv", header=T)
 head(train)
 ```
 ## 행이 1460개, 열이 81개 인게 실화인가요?
@@ -20,8 +20,7 @@ head(train)
 ```{r}
 dim(train)
 ```
-열이 81개가 있기 때문에, 어떤 열을 의미있게 쓸 수 있을 지 생각하다가</br>
-미국인이 집 구매 시 중요하게 생각하는 2가지와 관련있는 컬럼을 분석하고자 했다.</br>
+<내가 의미 있을 것이라고 생각했던 키워드와 컬럼>
 
 1. 학군
 2. 치안 -> Fence
@@ -29,12 +28,8 @@ dim(train)
 ```{r}
 library("VIM")
 library("ggplot2")
-aggr(train$Fence,prop=FALSE,numbers=TRUE)
+aggr(train$Fence, prop=FALSE, numbers=TRUE)
 ```
-
-Fence 컬럼의 결측치 개수가 과반수인 1179개나 되어,</br> 
-쓸모 없는 컬럼이라고 판단.</br>
-종속변수인 SalePrice 컬럼과 수치형 컬럼들과의 상관계수를 찾음.</br>
 
 우선, 종속변수인 SalePrice의 히스토그램.</br>
 
@@ -50,9 +45,9 @@ hist(train$SalePrice,col = 'lightblue', border = 'black',
 
 ```{r}
 # 상관계수 - 결측치 값 있음 
-train[ ,sapply(train, class) == 'numeric'] # 수치형 컬럼만 가져오기 
-train_cor <- cor((train)[ ,sapply(train, class) == 'numeric']) # 상관계수 
-view(train_cor) # 38행 38열
+
+# 수치형 컬럼만 가져오기 
+train_cor <- cor((train)[ ,sapply(train, class) == 'integer']) # 상관계수
 round(train_cor[,38],1) # SalePrices기준으로 상관계수
 ```
 가장 상관계수가 높은 TOP3
@@ -82,16 +77,14 @@ plot(train$OverallQual, train$SalePrice, main='집값과 전체 품질(OverallQu
 # 2.GrLivArea(거실 면적) 
 
 ```{r}
-plot(train$GrLivArea, train$SalePrice, main='집값과 거실 면적',
-     xlab='거실 면적(평방 피트)', ylab='집값', col='blue', pch=15,
-     xlim=c())
-
 # 이상치 처리 
 outlier <- boxplot.stats(train$GrLivArea)$out
-outlier
-train[train$GrLivArea %in% outlier, ] <- NA
-train.no.outlier <- na.omit(train)
-nrow(train.no.outlier)
+train.no.outlier <- train
+train.no.outlier[train.no.outlier$GrLivArea %in% outlier, ] <- NA
+
+plot(train.no.outlier$GrLivArea, train.no.outlier$SalePrice, 
+     main='집값과 거실 면적', xlab='거실 면적(평방 피트)', 
+     ylab='집값', col='blue', pch=15)
 ```
 
 # 3. FullBath(욕실 수) 
@@ -109,4 +102,3 @@ MB$FullBath<-as.factor(MB$FullBath)
 barplot(MB$meanBath, names.arg = MB$FullBath, main='집값과 욕실 수',
         xlab='욕실 수(0~3)', ylab='집값', col='purple')
 ```
-

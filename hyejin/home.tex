@@ -1,0 +1,1349 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={house Prices},
+  pdfauthor={Hyejin Lee},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{house Prices}
+\author{Hyejin Lee}
+\date{2022-08-08}
+
+\begin{document}
+\maketitle
+
+모던패밀리 필 던피로 빙의해서 집값 분석하기
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.6     v purrr   0.3.4
+## v tibble  3.1.8     v dplyr   1.0.9
+## v tidyr   1.2.0     v stringr 1.4.0
+## v readr   2.1.2     v forcats 0.5.1
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./house{-}prices/train.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 1460 Columns: 81
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (43): MSZoning, Street, Alley, LotShape, LandContour, Utilities, LotConf...
+## dbl (38): Id, MSSubClass, LotFrontage, LotArea, OverallQual, OverallCond, Ye...
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 81
+##      Id MSSubClass MSZoning LotFr~1 LotArea Street Alley LotSh~2 LandC~3 Utili~4
+##   <dbl>      <dbl> <chr>      <dbl>   <dbl> <chr>  <chr> <chr>   <chr>   <chr>  
+## 1     1         60 RL            65    8450 Pave   <NA>  Reg     Lvl     AllPub 
+## 2     2         20 RL            80    9600 Pave   <NA>  Reg     Lvl     AllPub 
+## 3     3         60 RL            68   11250 Pave   <NA>  IR1     Lvl     AllPub 
+## 4     4         70 RL            60    9550 Pave   <NA>  IR1     Lvl     AllPub 
+## 5     5         60 RL            84   14260 Pave   <NA>  IR1     Lvl     AllPub 
+## 6     6         50 RL            85   14115 Pave   <NA>  IR1     Lvl     AllPub 
+## # ... with 71 more variables: LotConfig <chr>, LandSlope <chr>,
+## #   Neighborhood <chr>, Condition1 <chr>, Condition2 <chr>, BldgType <chr>,
+## #   HouseStyle <chr>, OverallQual <dbl>, OverallCond <dbl>, YearBuilt <dbl>,
+## #   YearRemodAdd <dbl>, RoofStyle <chr>, RoofMatl <chr>, Exterior1st <chr>,
+## #   Exterior2nd <chr>, MasVnrType <chr>, MasVnrArea <dbl>, ExterQual <chr>,
+## #   ExterCond <chr>, Foundation <chr>, BsmtQual <chr>, BsmtCond <chr>,
+## #   BsmtExposure <chr>, BsmtFinType1 <chr>, BsmtFinSF1 <dbl>, ...
+## # i Use `colnames()` to see all variable names
+\end{verbatim}
+
+\hypertarget{uxd589uxc774-1460uxac1c-uxc5f4uxc774-81uxac1c-uxc778uxac8c-uxc2e4uxd654uxc778uxac00uxc694}{%
+\subsection{행이 1460개, 열이 81개 인게
+실화인가요?}\label{uxd589uxc774-1460uxac1c-uxc5f4uxc774-81uxac1c-uxc778uxac8c-uxc2e4uxd654uxc778uxac00uxc694}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1460   81
+\end{verbatim}
+
+열이 81개가 있기 때문에, 어떤 열을 의미있게 쓸 수 있을 지 생각하다가
+미국인이 집 구매 시 중요하게 생각하는 2가지와 관련있는 컬럼을 분석하고자
+했다.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  학군
+\item
+  치안 -\textgreater{} Fence
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"VIM"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 필요한 패키지를 로딩중입니다: colorspace
+\end{verbatim}
+
+\begin{verbatim}
+## 필요한 패키지를 로딩중입니다: grid
+\end{verbatim}
+
+\begin{verbatim}
+## VIM is ready to use.
+\end{verbatim}
+
+\begin{verbatim}
+## Suggestions and bug-reports can be submitted at: https://github.com/statistikat/VIM/issues
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 다음의 패키지를 부착합니다: 'VIM'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:datasets':
+## 
+##     sleep
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\FunctionTok{aggr}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{Fence,}\AttributeTok{prop=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{numbers=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{home_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+Fence 컬럼의 결측치 개수가 과반수인 1179개나 되어, 쓸모 없는 컬럼이라고
+판단. 종속변수인 SalePrice 컬럼과 수치형 컬럼들과의 상관계수를 찾음.
+
+우선, 종속변수인 SalePrice의 히스토그램.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# saleprice 히스토그램}
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen=}\DecValTok{999}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{SalePrice,}\AttributeTok{col =} \StringTok{\textquotesingle{}lightblue\textquotesingle{}}\NormalTok{, }\AttributeTok{border =} \StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{,}
+         \AttributeTok{main =} \StringTok{\textquotesingle{}SalePrice 히스토그램\textquotesingle{}}\NormalTok{, }\AttributeTok{xlab =} \StringTok{\textquotesingle{}SalePrice\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}count\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <9e>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <8a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <86>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <b7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <9e>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on 'SalePrice 히스토그램' in 'mbcsToSbcs': dot substituted
+## for <a8>
+\end{verbatim}
+
+\includegraphics{home_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+1.정규분포에서 살짝 벗어난다. 2.데이터의 분포가 한쪽으로 쏠린 왜도
+현상이 보인다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 상관계수 {-} 결측치 값 있음 }
+\NormalTok{train[ ,}\FunctionTok{sapply}\NormalTok{(train, class) }\SpecialCharTok{==} \StringTok{\textquotesingle{}numeric\textquotesingle{}}\NormalTok{] }\CommentTok{\# 수치형 컬럼만 가져오기 }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1,460 x 38
+##       Id MSSub~1 LotFr~2 LotArea Overa~3 Overa~4 YearB~5 YearR~6 MasVn~7 BsmtF~8
+##    <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+##  1     1      60      65    8450       7       5    2003    2003     196     706
+##  2     2      20      80    9600       6       8    1976    1976       0     978
+##  3     3      60      68   11250       7       5    2001    2002     162     486
+##  4     4      70      60    9550       7       5    1915    1970       0     216
+##  5     5      60      84   14260       8       5    2000    2000     350     655
+##  6     6      50      85   14115       5       5    1993    1995       0     732
+##  7     7      20      75   10084       8       5    2004    2005     186    1369
+##  8     8      60      NA   10382       7       6    1973    1973     240     859
+##  9     9      50      51    6120       7       5    1931    1950       0       0
+## 10    10     190      50    7420       5       6    1939    1950       0     851
+## # ... with 1,450 more rows, 28 more variables: BsmtFinSF2 <dbl>,
+## #   BsmtUnfSF <dbl>, TotalBsmtSF <dbl>, `1stFlrSF` <dbl>, `2ndFlrSF` <dbl>,
+## #   LowQualFinSF <dbl>, GrLivArea <dbl>, BsmtFullBath <dbl>,
+## #   BsmtHalfBath <dbl>, FullBath <dbl>, HalfBath <dbl>, BedroomAbvGr <dbl>,
+## #   KitchenAbvGr <dbl>, TotRmsAbvGrd <dbl>, Fireplaces <dbl>,
+## #   GarageYrBlt <dbl>, GarageCars <dbl>, GarageArea <dbl>, WoodDeckSF <dbl>,
+## #   OpenPorchSF <dbl>, EnclosedPorch <dbl>, `3SsnPorch` <dbl>, ...
+## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train\_cor }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{((train)[ ,}\FunctionTok{sapply}\NormalTok{(train, class) }\SpecialCharTok{==} \StringTok{\textquotesingle{}numeric\textquotesingle{}}\NormalTok{]) }\CommentTok{\# 상관계수 }
+\FunctionTok{view}\NormalTok{(train\_cor) }\CommentTok{\# 38행 38열}
+\FunctionTok{round}\NormalTok{(train\_cor[,}\DecValTok{38}\NormalTok{],}\DecValTok{1}\NormalTok{) }\CommentTok{\# SalePrices기준으로 상관계수}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Id    MSSubClass   LotFrontage       LotArea   OverallQual 
+##           0.0          -0.1            NA           0.3           0.8 
+##   OverallCond     YearBuilt  YearRemodAdd    MasVnrArea    BsmtFinSF1 
+##          -0.1           0.5           0.5            NA           0.4 
+##    BsmtFinSF2     BsmtUnfSF   TotalBsmtSF      1stFlrSF      2ndFlrSF 
+##           0.0           0.2           0.6           0.6           0.3 
+##  LowQualFinSF     GrLivArea  BsmtFullBath  BsmtHalfBath      FullBath 
+##           0.0           0.7           0.2           0.0           0.6 
+##      HalfBath  BedroomAbvGr  KitchenAbvGr  TotRmsAbvGrd    Fireplaces 
+##           0.3           0.2          -0.1           0.5           0.5 
+##   GarageYrBlt    GarageCars    GarageArea    WoodDeckSF   OpenPorchSF 
+##            NA           0.6           0.6           0.3           0.3 
+## EnclosedPorch     3SsnPorch   ScreenPorch      PoolArea       MiscVal 
+##          -0.1           0.0           0.1           0.1           0.0 
+##        MoSold        YrSold     SalePrice 
+##           0.0           0.0           1.0
+\end{verbatim}
+
+가장 상관계수가 높은 TOP3
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  OverallQual (0.8)
+\item
+  GrLivArea (0.7)
+\item
+  FullBath (0.6)
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 상관관계 그래프 }
+\FunctionTok{library}\NormalTok{(}\StringTok{"corrplot"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.92 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{corrplot}\NormalTok{(train\_cor)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{home_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\hypertarget{overallqualuxc804uxccb4-uxd488uxc9c8}{%
+\section{1. OverallQual(전체
+품질)}\label{overallqualuxc804uxccb4-uxd488uxc9c8}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{OverallQual, train}\SpecialCharTok{$}\NormalTok{SalePrice, }\AttributeTok{main=}\StringTok{\textquotesingle{}집값과 전체 품질(OverallQual)\textquotesingle{}}\NormalTok{,}
+     \AttributeTok{xlab=}\StringTok{\textquotesingle{}전체 품질(등급)\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}집값\textquotesingle{}}\NormalTok{, }\AttributeTok{col=}\StringTok{\textquotesingle{}orange\textquotesingle{}}\NormalTok{, }\AttributeTok{pch=}\DecValTok{15}\NormalTok{,}
+     \AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <92>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <bc>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <92>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 전체 품질(OverallQual)' in
+## 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <84>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <b2>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <92>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <93>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <b1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '전체 품질(등급)' in 'mbcsToSbcs':
+## dot substituted for <89>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <92>
+\end{verbatim}
+
+\includegraphics{home_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+컬럼 OverallQual은 집의 전반적인 재료와 마감을 평가. 집의 전체 품질이
+올라갈수록 집값이 올라가는 모습을 보임. 특이한게 최고 등급인 10등급에서
+다양한 가격의 분포를 볼 수 있음.
+
+\hypertarget{grlivareauxac70uxc2e4-uxba74uxc801}{%
+\section{2.GrLivArea(거실
+면적)}\label{grlivareauxac70uxc2e4-uxba74uxc801}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{GrLivArea, train}\SpecialCharTok{$}\NormalTok{SalePrice, }\AttributeTok{main=}\StringTok{\textquotesingle{}집값과 거실 면적\textquotesingle{}}\NormalTok{,}
+     \AttributeTok{xlab=}\StringTok{\textquotesingle{}거실 면적(평방 피트)\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}집값\textquotesingle{}}\NormalTok{, }\AttributeTok{col=}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\AttributeTok{pch=}\DecValTok{15}\NormalTok{,}
+     \AttributeTok{xlim=}\FunctionTok{c}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <92>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <bc>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <b1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값과 거실 면적' in 'mbcsToSbcs':
+## dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <b1>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <b4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <a0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <81>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <8f>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <89>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <eb>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <a9>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <94>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <bc>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <ed>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <8a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '거실 면적(평방 피트)' in
+## 'mbcsToSbcs': dot substituted for <b8>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(...): conversion failure on '집값' in 'mbcsToSbcs': dot
+## substituted for <92>
+\end{verbatim}
+
+\includegraphics{home_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 이상치 처리 }
+\NormalTok{outlier }\OtherTok{\textless{}{-}} \FunctionTok{boxplot.stats}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{GrLivArea)}\SpecialCharTok{$}\NormalTok{out}
+\NormalTok{outlier}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 2945 3222 3608 3112 2794 3493 2978 3228 4676 2775 3194 3395 4316 3279 3140
+## [16] 2822 2872 2898 3082 2868 2828 3627 3086 2872 4476 3447 5642 2810 2792 3238
+## [31] 2784
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train[train}\SpecialCharTok{$}\NormalTok{GrLivArea }\SpecialCharTok{\%in\%}\NormalTok{ outlier, ] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{train.no.outlier }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(train)}
+\FunctionTok{nrow}\NormalTok{(train.no.outlier)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\hypertarget{fullbathuxc695uxc2e4-uxc218}{%
+\section{3. FullBath(욕실 수)}\label{fullbathuxc695uxc2e4-uxc218}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{factor}\NormalTok{(train}\SpecialCharTok{$}\NormalTok{FullBath), train}\SpecialCharTok{$}\NormalTok{SalePrice, }\AttributeTok{main=}\StringTok{\textquotesingle{}집값과 욕실 수\textquotesingle{}}\NormalTok{,}
+     \AttributeTok{xlab=}\StringTok{\textquotesingle{}욕실 수(0\textasciitilde{}3)\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}집값\textquotesingle{}}\NormalTok{, }\AttributeTok{col=}\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{, }\AttributeTok{pch=}\DecValTok{15}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <92>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <bc>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in (function (main = NULL, sub = NULL, xlab = NULL, ylab = NULL, :
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <92>
+\end{verbatim}
+
+\includegraphics{home_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\NormalTok{MB }\OtherTok{\textless{}{-}}\NormalTok{ train}\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(FullBath)}\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanBath=}\FunctionTok{mean}\NormalTok{(SalePrice))}
+\FunctionTok{str}\NormalTok{(MB)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble [5 x 2] (S3: tbl_df/tbl/data.frame)
+##  $ FullBath: num [1:5] 0 1 2 3 NA
+##  $ meanBath: num [1:5] 165201 134751 211550 246296 NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MB}\SpecialCharTok{$}\NormalTok{FullBath}\OtherTok{\textless{}{-}}\FunctionTok{as.factor}\NormalTok{(MB}\SpecialCharTok{$}\NormalTok{FullBath)}
+\FunctionTok{barplot}\NormalTok{(MB}\SpecialCharTok{$}\NormalTok{meanBath, }\AttributeTok{names.arg =}\NormalTok{ MB}\SpecialCharTok{$}\NormalTok{FullBath, }\AttributeTok{main=}\StringTok{\textquotesingle{}집값과 욕실 수\textquotesingle{}}\NormalTok{,}
+        \AttributeTok{xlab=}\StringTok{\textquotesingle{}욕실 수(0\textasciitilde{}3)\textquotesingle{}}\NormalTok{, }\AttributeTok{ylab=}\StringTok{\textquotesingle{}집값\textquotesingle{}}\NormalTok{, }\AttributeTok{col=}\StringTok{\textquotesingle{}purple\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <92>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <b3>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <bc>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값과 욕실 수' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <9a>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <95>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <8b>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <a4>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <88>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '욕실 수(0~3)' in 'mbcsToSbcs': dot substituted for <98>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <ec>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <a7>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <91>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <ea>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <b0>
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...):
+## conversion failure on '집값' in 'mbcsToSbcs': dot substituted for <92>
+\end{verbatim}
+
+\includegraphics{home_files/figure-latex/unnamed-chunk-9-2.pdf}
+
+\end{document}
