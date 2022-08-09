@@ -45,6 +45,16 @@ barplot(mean_price~YrSold,data=year_price,col=mycolor)
         - 값이 어떻게 바뀌었는지는 잠시후에
 - 기대되는 점
     - 
+    
+```{r fig.height=6,fig.width=5}
+df_su<-read.csv('./sua/diabetes/diabetes.csv',header=T)
+zero.na_df_su<-df_su
+zero.na_df_su[,][zero.na_df_su[,]==0]<-NA
+library(VIM)
+sum(!complete.cases(zero.na_df_su))
+aggr(zero.na_df_su,numbers=T,prop=F)
+```
+
 
 ## 곽영효
 ### 활용데이터
@@ -81,4 +91,7 @@ fan.plot(sp_ta_rast,col=mycolor,labels=paste(names(sp_ta_rast),sp_ta_rast),radiu
     
     - 풍속이 강한 날VS약한 날 대여 횟수
 
+```{r}
+
+```
 

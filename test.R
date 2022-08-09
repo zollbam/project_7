@@ -9,10 +9,11 @@ barplot(mean_price~YrSold,data=year_price,col=mycolor)
 
 ## 수아
 df_su<-read.csv('./sua/diabetes/diabetes.csv',header=T)
-zero.na_df_su<-df_su[]
-class(df_su)
+zero.na_df_su<-df_su
+zero.na_df_su[,][zero.na_df_su[,]==0]<-NA
 library(VIM)
-aggr(df_su,numbers=T,prop=F,sortVar=T)
+!complete.cases(zero.na_df_su)
+aggr(zero.na_df_su,numbers=T,prop=F)
 
 # 1~8열까지 이상치 구하기
 # Q1-1.5*IQR~Q3+1.5*IQR
@@ -47,4 +48,18 @@ fan.plot(sp_ta_rast,col=mycolor,labels=paste(names(sp_ta_rast),sp_ta_rast),radiu
 
 ## 호진
 df_ho<-read.csv('./hojin/train.csv',header=T)
-View(df_ho)
+df_ho$holiday<-factor(df_ho$holiday)
+h0_df_ho<-df_ho[df_ho$holiday==0,]
+h1_df_ho<-df_ho[df_ho$holiday==1,]
+h0_df_ho_to<-df_ho%>%
+    summarise(total=sum(count)/5)
+h1_df_ho_to<-df_ho%>%
+    summarise(total=sum(count)/2)
+result<-cbind(h0_df_ho_to,h1_df_ho_to)
+names(result)<-c('ho','h1')
+barplot(colnames(result),result[,1:2])
+
+
+
+
+
