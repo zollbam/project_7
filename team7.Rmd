@@ -48,6 +48,13 @@ output:
     - 한국 라면의 위상???
     - 
 
+```{r fig.width=5,fig.height=10}
+df_young<-read.csv('./younghyo/TopRamenRatings.csv',header=T,fileEncoding = "euc-kr")
+df_young$Stars<-as.numeric(df_young$Stars)
+hist(table(df_young$Stars))
+```
+
+
 ## 이호진
 ### 활용데이터
 - **자전가 대여**
