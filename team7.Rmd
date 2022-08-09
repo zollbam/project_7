@@ -25,6 +25,16 @@ output:
     1. BldgType 주거유형에 따른 집 가격
     2. 수영장 품질에 따른 집가격
     3. 년도별 집값 평균 추이
+
+```{r}
+df_hye<-read.csv('./hyejin/house-prices/train.csv',header=T)
+df_hye$YrSold<-factor(df_hye$YrSold)
+year_price<-df_hye%>%
+    group_by(YrSold)%>%
+    summarise(mean_price=mean(SalePrice))
+mycolor=1:nrow(year_price)
+barplot(mean_price~YrSold,data=year_price,col=mycolor)
+```
     
 ## 김수아
 - **당뇨병 검사**
@@ -48,10 +58,12 @@ output:
     - 한국 라면의 위상???
     - 
 
-```{r fig.width=5,fig.height=10}
+```{r fig.height=4,fig.width=5}
 df_young<-read.csv('./younghyo/TopRamenRatings.csv',header=T,fileEncoding = "euc-kr")
-df_young$Stars<-as.numeric(df_young$Stars)
-hist(table(df_young$Stars))
+sp_ta_rast<-sort(table(df_young$Style))
+library(plotrix)
+mycolor<-1:nrow(sp_ta_rast)
+fan.plot(sp_ta_rast,col=mycolor,labels=paste(names(sp_ta_rast),sp_ta_rast),radius=1)
 ```
 
 

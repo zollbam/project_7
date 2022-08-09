@@ -42,7 +42,7 @@ R을 알리조
 - *Top Ramen Ratings 2022*
 - 출처: https://www.kaggle.com/datasets/ankanhore545/top-ramen-ratings-2022
 - 어려웠던 점
-    - Stars열의 타입이 chr
+    - 데이터를 시각화 하기 위해 어떤 그래프를 선택해야 적합할지 고민을 함
 - 기대되는 점
     - 전세계의 라면의 종류에 대해 분석을 해보는 기대감과 즐거움 => 라면국물 병, 라면 초콜릿 => 원그래프로 종류보여주기
     - 한국 라면의 위상???
