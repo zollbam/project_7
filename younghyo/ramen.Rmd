@@ -15,10 +15,12 @@ knitr::opts_chunk$set(echo = TRUE)
 <https://www.theramenrater.com/>
 
 ## 서론
+![ramenrater](./img/ramenrater.png)
+
 
 2002년부터 라면 외길을 걸어온 라면 전문 리뷰어 'The Ramen Rater'
 
-그가 20년이란 세월동안 전 세계의 라면들에 매겨온 평점에 대한 데이터다.
+그가 블로그에서 20년이란 세월동안 전 세계의 라면들에 매겨온 평점에 대한 데이터다.
 
 
 ## 라?면
@@ -27,8 +29,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ![ra?men](./img/ramen_bar2.png)
 ![ra?men](./img/ramen_can.png)
 
-bar와 can 타입의 항목이 있었는데
-라면이라고 부르기는 어려운 음식들이었다.
+bar와 can타입의 항목이 있었는데 라면이라고 부르기는 어려운 음식들이었다.
+
 이들을 제외하고 분석을 실시했다.
 
 
@@ -61,7 +63,7 @@ df$Country <- as.factor(df$Country)
 
 ## 항목 수 상위 10개국
 
-```{r}
+```{r include = F}
 country_10 <- head(table(df$Country)[order(table(df$Country), decreasing = T)], 10)
 
 country_10
@@ -90,7 +92,7 @@ graph1 <- graph1 + geom_bar(country_10[country_10$Var1=='South Korea', ],
 graph1
 ```
 
-# 국가별 라면 평균 평점
+## 국가별 라면 평균 평점
 
 
 ```{r include = F, warning=F}
@@ -123,7 +125,13 @@ graph5 <- graph5 + geom_bar(df_country_10_mean_df[df_country_10_mean_df$df_count
 ```{r}
 graph5
 ```
+## 분석
 
+태국을 제외한 말레이시아, 인도네시아, 싱가포르 라면들의 평균 평점이 1위 그룹을
+형성했다.
+
+한국, 일본, 미국처럼 개수가 많았던 국가들은 저조한 평균 평점을 기록했다.
+생산한 라면 종류가 많은만큼, 애매한 상품들도 많이 개발되었기 때문.
 
 
 ## 4점 이상의 별점을 받은 라면의 비율
@@ -189,8 +197,14 @@ graph7 <- graph7 + geom_bar(df_country_10[df_country_10$Var1=='South Korea', ],
 graph7
 ```
 
+## 분석
 
+5점 만점을 받은 비율은 한국이 압도적으로 1위.
+    - 신라면 시리즈나 불닭 시리즈처럼 파생상품 개발에 적극적인 것이 이유로 판단됨.
 
+4점 이상 비율에선 10개국 중 꼴지였던 대만이 5점 만점 비율에선 2위를 차지.
+
+이와 반대로 4점 이상 비율이 1위였던 일본은 5점 만점 비율에선 8위라는 낮은 순위. 
 
 ## 라면 포장 방법에 따른 종류 개수
 
@@ -213,8 +227,8 @@ graph3
 
 ## 분석
 
-한국에선 왕뚜껑, 공화춘과 같은 Bowl형 컵라면을
-Cup형 컵라면에 비해서 보기 힘듦.
+한국에선 왕뚜껑, 공화춘과 같은 Bowl형 컵라면을 Cup형 컵라면에 비해서 보기 힘듦.
+
 하지만, 의외로 전세계적으로는 Bowl형과 Cup형의 가짓수가 비슷
 
 
@@ -249,6 +263,7 @@ graph4
 ![ramen_box](./img/ramen_box.png)
 
 위와 같은 박스형 라면들이 평균 별점이 제일 높았다.
+
 박스형으로 포장된 것들은 보통 고가형 라인업이 많기 때문인 것으로 생각된다.
 
 
@@ -289,11 +304,32 @@ graph6 <- graph6 + geom_text(aes(label=korean_ramen, "%"), size=3, hjust=1.25,
 graph6
 ```
 
-## 분석
 
-## 별점 5점 만점을 획득한 한국 라면
+## 번외: The Ramen Rater가 뽑은 한국의 역체라면 2021 Edition
 
-```{r include=F}
+![rank10_신라면블랙](./img/rank10.png)
+
+![rank09_삼양치즈라면](./img/rank09.png)
+
+![rank08_팔도치즈라면](./img/rank08.png)
+
+![rank07_신라면건면](./img/rank07.png)
+
+![rank06_라이트_불닭볶음면](./img/rank06.png)
+
+![rank05_짜장불닭라볶이](./img/rank05.png)
+
+![rank04_팔도라볶이](./img/rank04.png)
+
+![rank03_삼양라면_매운맛](./img/rank03.png)
+
+![rank02_진짬뽕](./img/rank02.png)
+
+![rank01_까르보불닭라볶이](./img/rank01.png)
+
+## 번외2: 별점 5점 만점을 획득한 한국 라면 리스트
+
+```{r}
 df[df$Country == 'South Korea' & df$Stars == 5.00,]$Variety
 ```
 
