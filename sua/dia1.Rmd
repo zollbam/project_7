@@ -166,3 +166,47 @@ mean(df$Insulin)
 인슐린이 0인 사람 중에 당뇨인 사람은 374명 중 138명뿐이었다.
 
 인슐린 0 값을 처리하는 가장 좋은 방법은 뭘까?
+
+```{r}
+sum(df[df$Insulin %in% outlier, 9])
+length(df[df$Insulin %in% outlier, 9])
+```
+인슐린 이상치를 가진 사람들(34명) 중 당뇨인 사람은 19명
+```{r}
+mean(df[df$Insulin %in% outlier, 2])
+```
+혈당 평균은 전체 혈당 평균에 비해 높음
+
+```{r}
+# 전체 혈당 평균
+mean(df$Glucose)
+```
+
+```{r}
+iqr_insulin<-IQR(df$Insulin)
+
+q3<-quantile(df$Insulin)[4]
+q1<-quantile(df$Insulin)[2]
+min_out<-q1-1.5*iqr_insulin
+max_out<-q3+1.5*iqr_insulin
+max_out
+```
+이상치를 처리하기 위해 사분위수를 이용하여 이상치 값들을 대체함
+0을 대체하기 위해 (0, max_out)의 범위에서 0의 개수(374개)만큼 샘플링
+
+
+```{r}
+sample_insulin<-sample(0:max_out, size=sum(df$Insulin==0), replace=T)
+df[df$Insulin==0, ]$Insulin<-sample_insulin
+```
+샘플링해서 0값들 대체
+
+
+```{r}
+
+```
+
+```{r}
+
+```
+
