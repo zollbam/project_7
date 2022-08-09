@@ -5,11 +5,23 @@ date: "2022-08-08"
 output: html_document
 ---
 
+```{r include=FALSE}
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message =  F)
+```
+
 ## 10886개의 관측값, 12개의 변수
 ```{r}
 df <- read.csv("train.csv", header = T)
 str(df)
 ```
+
+# df의 season과 weather 타입 변경
+```{r}
+df$season <- factor(df$season, labels = c("Spring", "Summer", "Fall", "Winter"))
+df$weather <- factor(df$weather, labels = c("Good", "Normal", "Bad", "Very Bad"))
+```
+
 ## NA 값 확인
 ```{r}
 for (i in 1:length(df)){
@@ -54,7 +66,7 @@ traindf$hour <- factor(traindf$hour)
 traindf$wday <- factor(traindf$wday, labels = c("Sun", "Mon", "Tue", "Wed", "Thu","Fir","Sat"))
 ```
 
-# 타입 변경 확인
+# 타입 변경 확인 및 열에 대한 정보 확인
 ```{r}
 str(traindf)
 summary(traindf)
@@ -141,14 +153,85 @@ se_cou_count
 barplot(se~season,data=se_cou_count)
 ```
 
-
+# 섭씨 온도별 대여수
 ```{r}
-traindf[traindf$season=='Winter','count']
-sort(traindf[traindf$season=='Winter','count'],decreasing=T)
-sort(traindf[traindf$season=='Spring','count'],decreasing=T)
-sum(traindf[traindf$season=='Winter', 'count'])
-sum(traindf[traindf$season=='Spring', 'count'])
+te_cou_count<-traindf%>%
+    group_by(temp)%>%
+    summarise(te=sum(count))
+
+te_cou_count
+barplot(te~temp,data=te_cou_count)
 ```
 
-summary(traindf)
-sort(decreas)
+# 상대 습도별 대여수
+```{r}
+hu_cou_count<-traindf%>%
+    group_by(humidity)%>%
+    summarise(hu=sum(count))
+
+hu_cou_count
+barplot(hu~humidity,data=hu_cou_count)
+```
+
+# 풍속 별 대여수
+```{r}
+wi_cou_count<-traindf%>%
+    group_by(windspeed)%>%
+    summarise(wi=sum(count))
+
+wi_cou_count
+barplot(wi~windspeed,data=wi_cou_count)
+```
+
+# 섭씨 온도, 섭씨 온도 체감, 상대 습도, 풍속 상관계수 비교 및 그래프
+```{r}
+library(corrplot)
+traindf_nu <- traindf[, 6:9]
+cor_matrix <- cor(traindf_nu)
+cor_matrix
+par(mfrow=c(1,1))
+corrplot(cor_matrix)
+```
+
+
+# 계절별 미등록 사용자 대여수 (1:봄, 2:여름, 3:가을, 4:겨울)
+```{r}
+se_ca_count<-df%>%
+    group_by(season)%>%
+    summarise(ca=sum(casual))
+
+se_ca_count
+barplot(ca~season,data=se_ca_count)
+```
+
+# 계절별 등록 사용자 대여수 (1:봄, 2:여름, 3:가을, 4:겨울)
+```{r}
+ssn_ca_count<-df%>%
+    group_by(season)%>%
+    summarise(ssn=sum(registered))
+
+ssn_ca_count
+barplot(ssn~season,data=ssn_ca_count)
+```
+
+# 날씨별 미등록 사용자 대여수 (1:맑음, 2:보통, 3:안좋음, 4.매우 안좋음)
+```{r}
+wea_ca_count<-df%>%
+    group_by(weather)%>%
+    summarise(wea=sum(casual))
+
+wea_ca_count
+barplot(wea~weather,data=wea_ca_count)
+```
+
+# 날씨별 등록 사용자 대여수 (1:맑음, 2:보통, 3:안좋음, 4:매우 안좋음)
+```{r}
+re_ca_count<-df%>%
+    group_by(weather)%>%
+    summarise(re=sum(registered))
+
+re_ca_count
+barplot(re~weather,data=re_ca_count)
+```
+
+
