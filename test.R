@@ -57,7 +57,7 @@ h1_df_ho_to<-df_ho%>%
     summarise(total=sum(count)/2)
 result<-cbind(h0_df_ho_to,h1_df_ho_to)
 names(result)<-c('ho','h1')
-
+result
 par(mfrow=c(1,2))
 barplot(result$ho,xlab='ho')
 barplot(result$h1,xlab='h1')
