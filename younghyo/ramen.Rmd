@@ -3,8 +3,8 @@ title: "The Ramen Rater"
 author: "곽영효"
 date: "2022-08-08"
 output:
-  word_document: default
   html_document: default
+  word_document: default
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -116,10 +116,10 @@ graph2 + geom_bar(df_country_10[df_country_10$Var1=='South Korea', ],
 
 
 ```{r}
-df[(df$Country == 'South Korea') & (df$Stars == 5),]$Variety
+# df[(df$Country == 'South Korea') & (df$Stars == 5),]$Variety
 ```
 
-## 포장 방법에 따른 라면 종류 개수
+## 라면 포장 방법에 따른 종류 개수
 
 
 ```{r}
@@ -135,9 +135,9 @@ graph3 <- graph3 + coord_flip() + labs(x='', y='라면 개수') +
 
 graph3
 ```
+
+
 ## 라면 포장 방법에 따른 평균 별점 
-
-
 
 ```{r}
 ramen_style <- c('Pack', 'Bowl', 'Cup', 'Tray', 'Box')
@@ -160,8 +160,19 @@ graph4 <- graph4 + coord_flip() + labs(x='', y='평균 별점') +
 graph4
 ```
 
+## 분석
+
+![ramen_box](./img/ramen_box.png)
+
+위와 같은 박스형 라면들이 평균 별점이 제일 높았다.
 
 
+
+```{r}
+length(df[(df$Country == 'South Korea'),]$Variety)
+
+
+```
 
 
 
